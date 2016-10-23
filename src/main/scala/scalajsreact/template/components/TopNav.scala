@@ -1,15 +1,11 @@
 package scalajsreact.template.components
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.Reusability
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
+import org.scalajs.dom.html.Menu
 
 import scala.scalajs.js
 import scalacss.Defaults._
-import scalacss.ScalaCssReact._
-import scalajsreact.template.models.Menu
-import scalajsreact.template.routes.AppRouter.AppPage
 
 
 object TopNav {
@@ -38,24 +34,23 @@ object TopNav {
 
   }
 
-  case class Props(menus: Vector[Menu], selectedPage: AppPage, ctrl: RouterCtl[AppPage])
+  case class Props(menus: Vector[Menu]/*, selectedPage: AppPage, ctrl: RouterCtl[AppPage]*/)
 
-  implicit val currentPageReuse = Reusability.by_==[AppPage]
-  implicit val propsReuse = Reusability.by((_:Props).selectedPage)
+//  implicit val currentPageReuse = Reusability.by_==[AppPage]
+//  implicit val propsReuse = Reusability.by((_:Props).selectedPage)
 
-  val component = ReactComponentB[Props]("TopNav")
+  val component = ScalaComponent.build[Props]("TopNav")
     .render_P { P =>
       <.header(
         <.nav(
-          <.ul(Style.navMenu,
-            P.menus.map(item => <.li(^.key := item.name, Style.menuItem(item.route.getClass == P.selectedPage.getClass), item.name, P.ctrl setOnClick item.route)))
+//          <.ul(Style.navMenu,
+//            P.menus.map(item => <.li(^.key := item.name, Style.menuItem(item.route.getClass == P.selectedPage.getClass), item.name, P.ctrl setOnClick item.route)))
         )
       )
     }
-    .configure(Reusability.shouldComponentUpdate)
+    //.configure(Reusability.shouldComponentUpdate)
     .build
-
-  def apply(props: Props, ref: js.UndefOr[String] = "", key: js.Any = {}) = component.set(key, ref)(props)
+  def apply(props: Props, ref: js.UndefOr[String] = "", key: js.Any = {}) = component.ctor.apply(props)
 
 }
 

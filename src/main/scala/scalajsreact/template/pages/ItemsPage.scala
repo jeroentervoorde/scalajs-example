@@ -1,12 +1,10 @@
 package scalajsreact.template.pages
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
+
 import scala.scalajs.js
 import scalacss.Defaults._
-import scalacss.ScalaCssReact._
-import scalajsreact.template.components.LeftNav
 import scalajsreact.template.routes.Item
 
 object ItemsPage {
@@ -23,17 +21,17 @@ object ItemsPage {
     val content = style(padding(30.px))
   }
 
-  val component = ReactComponentB[Props]("ItemsPage")
+  val component = ScalaComponent.build[Props]("ItemsPage")
     .render_P { P =>
-      <.div(Style.container,
-        <.div(Style.nav, LeftNav(LeftNav.Props(Item.menu,P.selectedPage,P.ctrl))),
-        <.div(Style.content, P.selectedPage.render())
+      <.div(
+        //<.div(Style.nav, LeftNav(LeftNav.Props(Item.menu,P.selectedPage,P.ctrl))),
+        <.div(P.selectedPage.title)
       )
     }
     .build
 
-  case class Props(selectedPage : Item,ctrl : RouterCtl[Item])
+  case class Props(selectedPage : Item/*,ctrl : RouterCtl[Item]*/)
 
-  def apply(props : Props,ref: js.UndefOr[String] = "", key: js.Any = {}) = component.set(key, ref)(props)
+  def apply(props : Props,ref: js.UndefOr[String] = "", key: js.Any = {}) = component.ctor(props)
 
 }

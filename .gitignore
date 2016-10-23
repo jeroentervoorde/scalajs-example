@@ -20,5 +20,8 @@ project/plugins/project/
 .idea
 .idea_modules
 
+.ensime*
+node_modules
+
 #project
 js/*

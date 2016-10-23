@@ -1,13 +1,14 @@
 package scalajsreact.template.components.items
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
+
 
 object Item2Data {
 
-   val component = ReactComponentB.static("Item2",
+   val component = ScalaComponent.build[Unit]("Item2").render_P( p =>
      <.div("This is Item2 Page ")
-   ).buildU
+   ).build
 
-   def apply() = component()
+   def apply() = component
  }

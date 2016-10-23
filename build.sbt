@@ -12,27 +12,23 @@ persistLauncher := true
 
 persistLauncher in Test := false
 
-val scalaJSReactVersion = "0.10.1"
+val scalaJSReactVersion = "1.0.0-SNAPSHOT"
 
 val scalaCssVersion = "0.3.1"
 
-val reactJSVersion = "0.14.2"
-
-
-libraryDependencies ++= Seq("com.github.japgolly.scalajs-react" %%% "core" % scalaJSReactVersion,
-  "com.github.japgolly.scalajs-react" %%% "extra" % scalaJSReactVersion,
+libraryDependencies ++= Seq("com.github.japgolly.scalajs-react" %%% "neo" % scalaJSReactVersion,
   "com.github.japgolly.scalacss" %%% "core" % scalaCssVersion,
-  "com.github.japgolly.scalacss" %%% "ext-react" % scalaCssVersion)
+  "me.chrons" %%% "diode-react" % "1.0.1-SNAPSHOT")
 
-
-// React itself
-//   (react-with-addons.js can be react.js, react.min.js, react-with-addons.min.js)
-//DOM, which doesn't exist by default in the Rhino runner. To make the DOM available in Rhino
 jsDependencies ++= Seq(
-  "org.webjars.npm" % "react"     % reactJSVersion / "react-with-addons.js" commonJSName "React"    minified "react-with-addons.min.js",
-  "org.webjars.npm" % "react-dom" % reactJSVersion / "react-dom.js"         commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js"
 )
 
+
+val bundle = project.in(file("bundle"))
+
+jsDependencies += ProvidedJS / "bundle.js"
+
+addCommandAlias("bundle", "bundle/bundle")
 
 // creates single js resource file for easy integration in html page
 skip in packageJSDependencies := false
